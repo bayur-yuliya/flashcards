@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QScrollArea,
     QFrame,
+    QTextEdit,
 )
 
 import setup
@@ -24,9 +25,6 @@ class TopicPage(QWidget):
     def setup_ui(self):
         main_layout = QVBoxLayout(self)
 
-        main_layout.setContentsMargins(20, 20, 20, 20)
-        main_layout.setSpacing(15)
-
         # Название темы
         title = QLabel(self.topic_name)
 
@@ -41,7 +39,6 @@ class TopicPage(QWidget):
 
         # Кнопки
         buttons_layout = QHBoxLayout()
-        buttons_layout.setContentsMargins(5, 5, 5, 5)
         learn_button = QPushButton("Изучить тему")
         edit_button = QPushButton("Изменить")
         back_button = QPushButton("Назад")
@@ -85,14 +82,33 @@ class TopicPage(QWidget):
             ("attribute", "атрибут"),
         ]
 
-        for front, back in cards:
-            card = self.create_card(front, back)
-            cards_layout.addWidget(card)
+        cards_text = "\n".join(f"{front} - {back}" for front, back in cards)
 
-        # Чтобы карточки не растягивались на всю высоту
-        cards_layout.addStretch()
+        cards_text_edit = QTextEdit()
 
-        scroll_area.setWidget(cards_container)
+        cards_text_edit.setPlainText(cards_text)
+
+        # Только просмотр, редактировать нельзя
+        cards_text_edit.setReadOnly(True)
+
+        # Можно выделять мышкой и клавиатурой
+        cards_text_edit.setTextInteractionFlags(
+            Qt.TextInteractionFlag.TextSelectableByMouse
+            | Qt.TextInteractionFlag.TextSelectableByKeyboard
+        )
+
+        cards_text_edit.setStyleSheet(f"""
+            QTextEdit {{
+                border: 1px solid #cccccc;
+                border-radius: 8px;
+                background-color: {setup.LIGHT_COLOR};
+                color: black;
+                font-size: 16px;
+                padding: 10px;
+            }}
+        """)
+
+        scroll_area.setWidget(cards_text_edit)
 
         main_layout.addWidget(scroll_area)
 
@@ -102,42 +118,26 @@ class TopicPage(QWidget):
         back_button.clicked.connect(self.go_back)
 
     def create_card(self, front, back):
-        card = QFrame()
+        card = QTextEdit()
 
-        card.setFrameShape(QFrame.Shape.StyledPanel)
+        card.setPlainText(f"{front}        {back}")
+
+        card.setReadOnly(True)
 
         card.setStyleSheet(f"""
-            QFrame {{
+            QTextEdit {{
                 border: 1px solid #cccccc;
                 border-radius: 8px;
                 background-color: {setup.LIGHT_COLOR};
+                color: black;
+                font-size: 16px;
+                padding: 10px;
             }}
         """)
 
-        layout = QHBoxLayout(card)
+        card.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
-        front_label = QLabel(front)
-        back_label = QLabel(back)
-
-        front_label.setStyleSheet("""
-            QLabel {
-                border: none;
-                font-size: 16px;
-                font-weight: bold;
-                color: black;
-            }
-        """)
-
-        back_label.setStyleSheet("""
-            QLabel {
-                border: none;
-                font-size: 16px;
-                color: black;
-            }
-        """)
-
-        layout.addWidget(front_label)
-        layout.addWidget(back_label)
+        card.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         return card
 

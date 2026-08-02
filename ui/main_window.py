@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (
     QWidget,
     QScrollArea,
     QStackedWidget,
+    QLabel,
 )
 
 import setup
@@ -23,6 +24,7 @@ class MainWindow(QMainWindow):
         self.setup_ui()
 
     def setup_ui(self):
+
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
@@ -49,7 +51,16 @@ class MainWindow(QMainWindow):
 
         layout = QVBoxLayout(page)
 
-        layout.setContentsMargins(0, 0, 0, 0)
+        title = QLabel("Flashcards")
+
+        title.setStyleSheet("""
+            QLabel {
+                font-size: 28px;
+                font-weight: bold;
+            }
+        """)
+
+        layout.addWidget(title)
 
         # ScrollArea
         scroll_area = QScrollArea()
