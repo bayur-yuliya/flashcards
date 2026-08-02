@@ -6,35 +6,61 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QWidget,
     QScrollArea,
+    QStackedWidget,
 )
+
+from ui.topic_window import TopicPage
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.count = 0
-        self.initializeUI()
 
-    def initializeUI(self):
         self.setGeometry(300, 200, 600, 600)
         self.setWindowTitle("Flashcards")
 
-        self.setUpUI()
-        self.statusBar().showMessage("Message")
+        self.setup_ui()
 
-    def setUpUI(self):
+    def setup_ui(self):
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
         main_layout = QVBoxLayout(central_widget)
-        main_layout.setContentsMargins(20, 20, 20, 20)
-        main_layout.setSpacing(20)
 
-        # Контейнер для содержимого ScrollArea
+        main_layout.setContentsMargins(20, 20, 20, 20)
+
+        # Главный переключатель страниц
+        self.pages = QStackedWidget()
+
+        # Создаём главную страницу
+        self.main_page = self.create_main_page()
+
+        # Добавляем её в QStackedWidget
+        self.pages.addWidget(self.main_page)
+
+        # Показываем главную страницу
+        self.pages.setCurrentWidget(self.main_page)
+
+        main_layout.addWidget(self.pages)
+
+    def create_main_page(self):
+        page = QWidget()
+
+        layout = QVBoxLayout(page)
+
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        # ScrollArea
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+
+        # Контейнер тем
         scroll_content = QWidget()
 
-        # Сетка с темами
         topics_layout = QGridLayout(scroll_content)
+
         topics_layout.setContentsMargins(0, 0, 0, 0)
         topics_layout.setSpacing(15)
         topics_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
@@ -57,6 +83,7 @@ class MainWindow(QMainWindow):
             column = index % columns
 
             button = QPushButton(topic)
+
             button.setMinimumHeight(100)
 
             button.setStyleSheet("""
@@ -82,20 +109,30 @@ class MainWindow(QMainWindow):
                 lambda checked=False, name=topic: self.topic_clicked(name)
             )
 
-            topics_layout.addWidget(button, row, column)
-
-        # ScrollArea
-        scroll_area = QScrollArea()
+            topics_layout.addWidget(
+                button,
+                row,
+                column,
+            )
 
         scroll_area.setWidget(scroll_content)
-        scroll_area.setWidgetResizable(True)
 
-        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        layout.addWidget(scroll_area)
 
-        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
-
-        # Вот сюда добавляем только ScrollArea
-        main_layout.addWidget(scroll_area)
+        return page
 
     def topic_clicked(self, topic):
-        print(f"Selected topic: {topic}")
+        # Создаём страницу темы
+        topic_page = TopicPage(
+            topic_name=topic,
+            go_back=self.show_main_page,
+        )
+
+        # Добавляем её в QStackedWidget
+        self.pages.addWidget(topic_page)
+
+        # Переключаемся на неё
+        self.pages.setCurrentWidget(topic_page)
+
+    def show_main_page(self):
+        self.pages.setCurrentWidget(self.main_page)
