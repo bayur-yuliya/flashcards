@@ -1,0 +1,77 @@
+QPushButton[button_type="topic"] {{
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid {LIGHT_COLOR};
+    border-radius: 10px;
+    background-color: {LIGHT_COLOR};
+    color: {MIDNIGHT_GREEN};
+}}
+
+QPushButton[button_type="topic"]:hover {{
+    background-color: {MOSS_GREEN};
+}}
+
+QPushButton[button_type="topic"]:pressed {{
+    background-color: {DARK_GREEN};
+    color: {LIGHT_COLOR};
+}}
+
+
+QPushButton[button_type="back_button"] {{
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid {LIGHT_COLOR};
+    border-radius: 10px;
+    background-color: {LIGHT_COLOR};
+    color: {MIDNIGHT_GREEN};
+    padding: 10px;
+}}
+
+QPushButton[button_type="back_button"]:hover {{
+    background-color: {HOVER_MOSS_GREEN};
+}}
+
+QPushButton[button_type="back_button"]:pressed {{
+    background-color: {DARK_GREEN};
+    color: {LIGHT_COLOR};
+}}
+
+QPushButton[button_type="edit_button"] {{
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid {LIGHT_COLOR};
+    border-radius: 10px;
+    background-color: {POSE_BROWN};
+    color: {MIDNIGHT_GREEN};
+    padding: 10px;
+}}
+
+QPushButton[button_type="edit_button"]:hover {{
+    background-color: {HOVER_POSE_BROWN};
+}}
+
+QPushButton[button_type="edit_button"]:pressed {{
+    background-color: {DARK_GREEN};
+    color: {LIGHT_COLOR};
+}}
+
+
+
+QPushButton[button_type="learn_button"] {{
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid {LIGHT_COLOR};
+    border-radius: 10px;
+    background-color: {MOSS_GREEN};
+    color: {MIDNIGHT_GREEN};
+    padding: 10px;
+}}
+
+QPushButton[button_type="learn_button"]:hover {{
+    background-color: {HOVER_MOSS_GREEN};
+}}
+
+QPushButton[button_type="learn_button"]:pressed {{
+    background-color: {DARK_GREEN};
+    color: {LIGHT_COLOR};
+}}

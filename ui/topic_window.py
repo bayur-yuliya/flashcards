@@ -9,6 +9,8 @@ from PySide6.QtWidgets import (
     QFrame,
 )
 
+import setup
+
 
 class TopicPage(QWidget):
     def __init__(self, topic_name, go_back):
@@ -39,10 +41,14 @@ class TopicPage(QWidget):
 
         # Кнопки
         buttons_layout = QHBoxLayout()
-
+        buttons_layout.setContentsMargins(5, 5, 5, 5)
         learn_button = QPushButton("Изучить тему")
         edit_button = QPushButton("Изменить")
         back_button = QPushButton("Назад")
+
+        learn_button.setProperty("button_type", "learn_button")
+        edit_button.setProperty("button_type", "edit_button")
+        back_button.setProperty("button_type", "back_button")
 
         buttons_layout.addWidget(learn_button)
         buttons_layout.addWidget(edit_button)
@@ -100,12 +106,12 @@ class TopicPage(QWidget):
 
         card.setFrameShape(QFrame.Shape.StyledPanel)
 
-        card.setStyleSheet("""
-            QFrame {
+        card.setStyleSheet(f"""
+            QFrame {{
                 border: 1px solid #cccccc;
                 border-radius: 8px;
-                background-color: #f5f5f5;
-            }
+                background-color: {setup.LIGHT_COLOR};
+            }}
         """)
 
         layout = QHBoxLayout(card)

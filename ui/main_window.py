@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (
     QStackedWidget,
 )
 
+import setup
 from ui.topic_window import TopicPage
 
 
@@ -16,7 +17,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setGeometry(300, 200, 600, 600)
+        self.setGeometry(400, 100, 600, 600)
         self.setWindowTitle("Flashcards")
 
         self.setup_ui()
@@ -86,24 +87,7 @@ class MainWindow(QMainWindow):
 
             button.setMinimumHeight(100)
 
-            button.setStyleSheet("""
-                QPushButton {
-                    font-size: 18px;
-                    font-weight: bold;
-                    border: 1px solid #cccccc;
-                    border-radius: 10px;
-                    background-color: #f5f5f5;
-                    color: black;
-                }
-
-                QPushButton:hover {
-                    background-color: #e8e8e8;
-                }
-
-                QPushButton:pressed {
-                    background-color: #dcdcdc;
-                }
-            """)
+            button.setProperty("button_type", "topic")
 
             button.clicked.connect(
                 lambda checked=False, name=topic: self.topic_clicked(name)
