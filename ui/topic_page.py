@@ -6,7 +6,6 @@ from PySide6.QtWidgets import (
     QPushButton,
     QLabel,
     QScrollArea,
-    QFrame,
     QTextEdit,
 )
 
@@ -14,12 +13,12 @@ import setup
 
 
 class TopicPage(QWidget):
-    def __init__(self, topic_name, go_back):
+    def __init__(self, topic_name, go_back, learn_topic):
         super().__init__()
 
         self.topic_name = topic_name
         self.go_back = go_back
-
+        self.learn_topic_callback = learn_topic
         self.setup_ui()
 
     def setup_ui(self):
@@ -43,9 +42,20 @@ class TopicPage(QWidget):
         edit_button = QPushButton("Изменить")
         back_button = QPushButton("Назад")
 
-        learn_button.setProperty("button_type", "learn_button")
-        edit_button.setProperty("button_type", "edit_button")
-        back_button.setProperty("button_type", "back_button")
+        learn_button.setProperty(
+            "button_type",
+            "green_button",
+        )
+
+        edit_button.setProperty(
+            "button_type",
+            "pink_button",
+        )
+
+        back_button.setProperty(
+            "button_type",
+            "back_button",
+        )
 
         buttons_layout.addWidget(learn_button)
         buttons_layout.addWidget(edit_button)
@@ -63,14 +73,6 @@ class TopicPage(QWidget):
         scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         # Контейнер карточек
-        cards_container = QWidget()
-
-        cards_layout = QVBoxLayout(cards_container)
-
-        cards_layout.setContentsMargins(0, 0, 0, 0)
-        cards_layout.setSpacing(10)
-
-        # Пока карточки захардкожены
         cards = [
             ("class", "класс"),
             ("object", "объект"),
@@ -112,37 +114,12 @@ class TopicPage(QWidget):
 
         main_layout.addWidget(scroll_area)
 
-        # События
         learn_button.clicked.connect(self.learn_topic)
         edit_button.clicked.connect(self.edit_topic)
         back_button.clicked.connect(self.go_back)
 
-    def create_card(self, front, back):
-        card = QTextEdit()
-
-        card.setPlainText(f"{front}        {back}")
-
-        card.setReadOnly(True)
-
-        card.setStyleSheet(f"""
-            QTextEdit {{
-                border: 1px solid #cccccc;
-                border-radius: 8px;
-                background-color: {setup.LIGHT_COLOR};
-                color: black;
-                font-size: 16px;
-                padding: 10px;
-            }}
-        """)
-
-        card.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-
-        card.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-
-        return card
-
     def learn_topic(self):
-        print(f"Learning topic: {self.topic_name}")
+        self.learn_topic_callback(self.topic_name)
 
     def edit_topic(self):
         print(f"Editing topic: {self.topic_name}")

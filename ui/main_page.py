@@ -10,8 +10,8 @@ from PySide6.QtWidgets import (
     QLabel,
 )
 
-import setup
-from ui.topic_window import TopicPage
+from ui.topic_page import TopicPage
+from ui.learn_page import LearnPage
 
 
 class MainWindow(QMainWindow):
@@ -21,24 +21,21 @@ class MainWindow(QMainWindow):
         self.setGeometry(400, 100, 600, 600)
         self.setWindowTitle("Flashcards")
 
+        # Хранение текущей страницы
+        self.current_topic_page = None
         self.setup_ui()
 
     def setup_ui(self):
-
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
         main_layout = QVBoxLayout(central_widget)
-
         main_layout.setContentsMargins(20, 20, 20, 20)
 
         # Главный переключатель страниц
         self.pages = QStackedWidget()
 
-        # Создаём главную страницу
         self.main_page = self.create_main_page()
-
-        # Добавляем её в QStackedWidget
         self.pages.addWidget(self.main_page)
 
         # Показываем главную страницу
@@ -121,13 +118,28 @@ class MainWindow(QMainWindow):
         topic_page = TopicPage(
             topic_name=topic,
             go_back=self.show_main_page,
+            learn_topic=self.show_learn_page,
         )
+        self.current_topic_page = topic_page
 
         # Добавляем её в QStackedWidget
         self.pages.addWidget(topic_page)
 
         # Переключаемся на неё
         self.pages.setCurrentWidget(topic_page)
+
+    def show_learn_page(self, topic):
+        learn_page = LearnPage(
+            topic_name=topic,
+            go_back=self.show_topic_page,
+        )
+
+        self.pages.addWidget(learn_page)
+        self.pages.setCurrentWidget(learn_page)
+
+    def show_topic_page(self):
+        if self.current_topic_page is not None:
+            self.pages.setCurrentWidget(self.current_topic_page)
 
     def show_main_page(self):
         self.pages.setCurrentWidget(self.main_page)

@@ -1,7 +1,7 @@
 import sys
 from PySide6.QtWidgets import QApplication
 
-from ui.main_window import MainWindow
+from ui.main_page import MainWindow
 from utils.styles import load_stylesheet
 
 

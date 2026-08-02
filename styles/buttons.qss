@@ -36,7 +36,7 @@ QPushButton[button_type="back_button"]:pressed {{
     color: {LIGHT_COLOR};
 }}
 
-QPushButton[button_type="edit_button"] {{
+QPushButton[button_type="pink_button"] {{
     font-size: 18px;
     font-weight: bold;
     border: 1px solid {LIGHT_COLOR};
@@ -46,18 +46,18 @@ QPushButton[button_type="edit_button"] {{
     padding: 10px;
 }}
 
-QPushButton[button_type="edit_button"]:hover {{
+QPushButton[button_type="pink_button"]:hover {{
     background-color: {HOVER_POSE_BROWN};
 }}
 
-QPushButton[button_type="edit_button"]:pressed {{
+QPushButton[button_type="pink_button"]:pressed {{
     background-color: {DARK_GREEN};
     color: {LIGHT_COLOR};
 }}
 
 
 
-QPushButton[button_type="learn_button"] {{
+QPushButton[button_type="green_button"] {{
     font-size: 18px;
     font-weight: bold;
     border: 1px solid {LIGHT_COLOR};
@@ -67,11 +67,11 @@ QPushButton[button_type="learn_button"] {{
     padding: 10px;
 }}
 
-QPushButton[button_type="learn_button"]:hover {{
+QPushButton[button_type="green_button"]:hover {{
     background-color: {HOVER_MOSS_GREEN};
 }}
 
-QPushButton[button_type="learn_button"]:pressed {{
+QPushButton[button_type="green_button"]:pressed {{
     background-color: {DARK_GREEN};
     color: {LIGHT_COLOR};
 }}
