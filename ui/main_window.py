@@ -1,4 +1,12 @@
-from PySide6.QtWidgets import QMainWindow, QLabel, QPushButton
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import (
+    QMainWindow,
+    QPushButton,
+    QGridLayout,
+    QVBoxLayout,
+    QWidget,
+    QScrollArea,
+)
 
 
 class MainWindow(QMainWindow):
@@ -8,29 +16,86 @@ class MainWindow(QMainWindow):
         self.initializeUI()
 
     def initializeUI(self):
-        self.setGeometry(200, 100, 500, 400)
+        self.setGeometry(300, 200, 600, 600)
         self.setWindowTitle("Flashcards")
 
-        self.setUpMenu()
-        self.setUpCounter()
+        self.setUpUI()
         self.statusBar().showMessage("Message")
 
-    def setUpMenu(self):
-        menubar = self.menuBar()
-        file_menu = menubar.addMenu("Menu")
+    def setUpUI(self):
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
 
-        exit_action = file_menu.addAction("Exit")
-        exit_action.triggered.connect(self.close)
+        main_layout = QVBoxLayout(central_widget)
+        main_layout.setContentsMargins(20, 20, 20, 20)
+        main_layout.setSpacing(20)
 
-    def setUpCounter(self):
-        self.label = QLabel("Counter", self)
-        self.label.move(100, 100)
-        self.label_counter = QLabel(str(self.count), self)
-        self.label_counter.move(100, 150)
-        button = QPushButton("Increase", self)
-        button.move(100, 200)
-        button.clicked.connect(self.increaseCounter)
+        # Контейнер для содержимого ScrollArea
+        scroll_content = QWidget()
 
-    def increaseCounter(self):
-        self.count += 1
-        self.label_counter.setText(str(self.count))
+        # Сетка с темами
+        topics_layout = QGridLayout(scroll_content)
+        topics_layout.setContentsMargins(0, 0, 0, 0)
+        topics_layout.setSpacing(15)
+        topics_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+
+        topics = [
+            "Python",
+            "Django",
+            "English",
+            "SQL",
+            "PostgreSQL",
+            "Git",
+            "Docker",
+            "Algorithms",
+        ]
+
+        columns = 2
+
+        for index, topic in enumerate(topics):
+            row = index // columns
+            column = index % columns
+
+            button = QPushButton(topic)
+            button.setMinimumHeight(100)
+
+            button.setStyleSheet("""
+                QPushButton {
+                    font-size: 18px;
+                    font-weight: bold;
+                    border: 1px solid #cccccc;
+                    border-radius: 10px;
+                    background-color: #f5f5f5;
+                    color: black;
+                }
+
+                QPushButton:hover {
+                    background-color: #e8e8e8;
+                }
+
+                QPushButton:pressed {
+                    background-color: #dcdcdc;
+                }
+            """)
+
+            button.clicked.connect(
+                lambda checked=False, name=topic: self.topic_clicked(name)
+            )
+
+            topics_layout.addWidget(button, row, column)
+
+        # ScrollArea
+        scroll_area = QScrollArea()
+
+        scroll_area.setWidget(scroll_content)
+        scroll_area.setWidgetResizable(True)
+
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+
+        # Вот сюда добавляем только ScrollArea
+        main_layout.addWidget(scroll_area)
+
+    def topic_clicked(self, topic):
+        print(f"Selected topic: {topic}")
