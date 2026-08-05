@@ -16,4 +16,5 @@ def load_stylesheet(filename: str) -> str:
         DARK_GREEN=setup.DARK_GREEN,
         HOVER_MOSS_GREEN=setup.HOVER_MOSS_GREEN,
         HOVER_POSE_BROWN=setup.HOVER_POSE_BROWN,
+        BUFF=setup.BUFF,
     )

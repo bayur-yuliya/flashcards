@@ -13,12 +13,13 @@ import setup
 
 
 class TopicPage(QWidget):
-    def __init__(self, topic_name, go_back, learn_topic):
+    def __init__(self, topic_name, go_back, edit_topic, learn_topic):
         super().__init__()
 
         self.topic_name = topic_name
         self.go_back = go_back
         self.learn_topic_callback = learn_topic
+        self.edit_topic_callback = edit_topic
         self.setup_ui()
 
     def setup_ui(self):
@@ -122,4 +123,4 @@ class TopicPage(QWidget):
         self.learn_topic_callback(self.topic_name)
 
     def edit_topic(self):
-        print(f"Editing topic: {self.topic_name}")
+        self.edit_topic_callback(self.topic_name)

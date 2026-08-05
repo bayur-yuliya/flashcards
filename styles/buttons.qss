@@ -75,3 +75,5 @@ QPushButton[button_type="green_button"]:pressed {{
     background-color: {DARK_GREEN};
     color: {LIGHT_COLOR};
 }}
+
+

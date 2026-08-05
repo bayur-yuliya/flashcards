@@ -10,11 +10,12 @@ from PySide6.QtWidgets import (
     QLabel,
 )
 
+from ui.edit_page import EditPage
 from ui.topic_page import TopicPage
 from ui.learn_page import LearnPage
 
 
-class MainWindow(QMainWindow):
+class MainPage(QMainWindow):
     def __init__(self):
         super().__init__()
 
@@ -119,8 +120,10 @@ class MainWindow(QMainWindow):
             topic_name=topic,
             go_back=self.show_main_page,
             learn_topic=self.show_learn_page,
+            edit_topic=self.show_edit_page,
         )
-        self.current_topic_page = topic_page
+
+        self.current_page = topic_page
 
         # Добавляем её в QStackedWidget
         self.pages.addWidget(topic_page)
@@ -138,8 +141,17 @@ class MainWindow(QMainWindow):
         self.pages.setCurrentWidget(learn_page)
 
     def show_topic_page(self):
-        if self.current_topic_page is not None:
-            self.pages.setCurrentWidget(self.current_topic_page)
+        if self.current_page is not None:
+            self.pages.setCurrentWidget(self.current_page)
 
     def show_main_page(self):
         self.pages.setCurrentWidget(self.main_page)
+
+    def show_edit_page(self, topic):
+        edit_page = EditPage(
+            go_back=self.show_topic_page,
+            create_mode=False,
+        )
+
+        self.pages.addWidget(edit_page)
+        self.pages.setCurrentWidget(edit_page)

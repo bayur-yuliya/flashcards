@@ -1,7 +1,7 @@
 import sys
 from PySide6.QtWidgets import QApplication
 
-from ui.main_page import MainWindow
+from ui.main_page import MainPage
 from utils.styles import load_stylesheet
 
 
@@ -10,7 +10,7 @@ def main():
 
     app.setStyleSheet(load_stylesheet("buttons.qss"))
 
-    window = MainWindow()
+    window = MainPage()
     window.show()
     sys.exit(app.exec())
 
