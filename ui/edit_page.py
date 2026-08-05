@@ -24,6 +24,33 @@ class CardRow(QFrame):
 
         self.front_edit = QLineEdit(front)
         self.back_edit = QLineEdit(back)
+        self.front_edit.setStyleSheet("""
+            CardRow {
+                background-color: #F7F4D5;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                padding: 4px;
+                color: #105666;
+            }
+            CardRow:focus {
+                border: 1px solid #0078d7;
+            }
+        """)
+        self.front_edit.setMinimumHeight(50)
+
+        self.back_edit.setStyleSheet("""
+            CardRow {
+                background-color: #F7F4D5;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                padding: 4px;
+                color: #105666;
+            }
+            CardRow:focus {
+                border: 1px solid #0078d7;
+            }
+        """)
+        self.back_edit.setMinimumHeight(50)
 
         self.edit_button = QPushButton("Изменить")
         self.delete_button = QPushButton("Удалить")
@@ -86,6 +113,20 @@ class EditPage(QWidget):
 
         self.topic_edit = QLineEdit()
 
+        self.topic_edit.setStyleSheet("""
+            QLineEdit {
+                background-color: #F7F4D5;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                padding: 4px;
+                color: #105666;
+            }
+            QLineEdit:focus {
+                border: 1px solid #0078d7;
+            }
+        """)
+        self.topic_edit.setMinimumHeight(50)
+
         if self.create_mode:
             self.topic_button = QPushButton("Добавить")
         else:
@@ -106,9 +147,35 @@ class EditPage(QWidget):
 
         self.front_edit = QLineEdit()
         self.front_edit.setPlaceholderText("Первая сторона")
+        self.front_edit.setStyleSheet("""
+            QLineEdit {
+                background-color: #F7F4D5;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                padding: 4px;
+                color: #105666;
+            }
+            QLineEdit:focus {
+                border: 1px solid #0078d7;
+            }
+        """)
+        self.front_edit.setMinimumHeight(50)
 
         self.back_edit = QLineEdit()
         self.back_edit.setPlaceholderText("Вторая сторона")
+        self.back_edit.setStyleSheet("""
+            QLineEdit {
+                background-color: #F7F4D5;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                padding: 4px;
+                color: #105666;
+            }
+            QLineEdit:focus {
+                border: 1px solid #0078d7;
+            }
+        """)
+        self.back_edit.setMinimumHeight(50)
 
         self.add_button = QPushButton("Добавить")
 
